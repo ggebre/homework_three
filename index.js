@@ -14,32 +14,28 @@ const render = (ele, tmp) => {
 }
 const keyele = document.getElementById('key');
 const valele = document.getElementById('val');
+
+const eventListener = (element) => {
+    element.addEventListener('change', (e) => {
+        selected = e.target.value;
+        createDropDown();
+    });
+}
+
 let selected;
 const createDropDown = () => {
     let keystmp = '';
     let valstmp = '';
     Object.keys(state).forEach(key => {
-            if(selected === key){
-                keystmp += `<option value="${key}" selected>${key}</option>`;
-                valstmp += `<option value="${key}" selected>${state[key]}</option>`;
-            } else {
-                keystmp += `<option value="${key}">${key}</option>`;
-                valstmp += `<option value="${key}">${state[key]}</option>`;
-            }
-            
+        keystmp += `<option value="${key}" ${selected === key ? 'selected' : ''}>${key}</option>`;
+        valstmp += `<option value="${key}" ${selected === key ? 'selected' : ''}>${state[key]}</option>`;  
     });
     render(keyele, keystmp);
     render(valele, valstmp);
 }
 
 createDropDown();
+eventListener(keyele);
+eventListener(valele);
 
-keyele.addEventListener('change', e => {
-    selected = e.target.value;  
-    createDropDown();
-});
-valele.addEventListener('change', (e) => {
-    selected = e.target.value;
-    createDropDown();
-});
 
